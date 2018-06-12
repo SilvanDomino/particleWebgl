@@ -1,0 +1,30 @@
+{
+  "name": "boiler-plate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "webpack",
+    "start": "webpack-dev-server --port 3000 --hot --host 0.0.0.0 ",
+    "build": "echo \"hello\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-minify-webpack-plugin": "^0.3.1",
+    "babel-preset-env": "1.6.0",
+    "babel-preset-stage-2": "6.24.1",
+    "css-loader": "0.28.7",
+    "extract-text-webpack-plugin": "3.0.0",
+    "gl-mat4": "^1.2.0",
+    "nanogl": "^1.0.0",
+    "node-sass": "4.5.3",
+    "sass-loader": "6.0.6",
+    "style-loader": "0.18.2",
+    "webpack": "3.6.0",
+    "webpack-dev-server": "2.8.2"
+  }
+}
