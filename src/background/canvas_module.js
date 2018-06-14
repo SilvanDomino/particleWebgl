@@ -22,8 +22,8 @@ class Canvas {
     this._canvas.height = window.innerHeight;
 
     this.gl = this._canvas.getContext('webgl', {preserveDrawingBuffer: true, antialias: false});
-    this.ext = this.gl.getExtension('OES_texture_half_float');
-    // this.ext = this.gl.getExtension('OES_texture_float');
+    // this.ext = this.gl.getExtension('OES_texture_half_float');
+    this.ext = this.gl.getExtension('OES_texture_float');
 
     console.log(this.ext.HALF_FLOAT_OES);
     this.gl.enable(this.gl.DEPTH_TEST);
@@ -78,10 +78,10 @@ class Canvas {
     this.particlePositions = [];
     console.log(this.ext.OES_HALF_FLOAT);
 
-    this.particlePositions.push(new nanogl.Texture(this.gl, this.gl.RGBA, 36193, this.gl.RGBA));
-    this.particlePositions.push(new nanogl.Texture(this.gl, this.gl.RGBA, 36193, this.gl.RGBA));
+    this.particlePositions.push(new nanogl.Texture(this.gl, this.gl.RGBA, this.gl.FLOAT, this.gl.RGBA));
+    this.particlePositions.push(new nanogl.Texture(this.gl, this.gl.RGBA, this.gl.FLOAT, this.gl.RGBA));
 
-    this.flowTexture = new nanogl.Texture(this.gl, this.gl.RGBA, 36193, this.gl.RGBA);
+    this.flowTexture = new nanogl.Texture(this.gl, this.gl.RGBA, this.gl.FLOAT, this.gl.RGBA);
   }
 
   loadTextures() {
@@ -98,10 +98,11 @@ class Canvas {
     const buffer = new Uint16Array(pa.length);
     for (let i = 0; i < buffer.length; i++)
       buffer[i] = toHalf(pa[i]);
+    pa = new Float32Array(pa);
     // console.log(pa.uint32View);
     // console.log(new DataView(pa.buffer));
     for (let i = 0; i < this.particlePositions.length; i++) {
-      this.particlePositions[i].fromData(size, size, buffer);
+      this.particlePositions[i].fromData(size, size, pa);
       this.particlePositions[i].setFilter(false, false, false);
 
     }
