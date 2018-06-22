@@ -51,7 +51,9 @@ class Canvas
     //clear the screen once before we start
     this.gl.clear(this.gl.COLOR_BUFFER_BIT);
 
-    requestAnimationFrame(()=> {this.draw(); });
+    this.draw = this.draw.bind(this);
+
+    requestAnimationFrame(this.draw);
   }
 
   draw()
@@ -94,7 +96,18 @@ class Canvas
     this.gl.drawArrays(this.gl.POINTS, 0, particles);
 
     //request another animation frame
-    requestAnimationFrame(()=> {this.draw(); });
+    this.gl.viewport(0, 0, 128, 128);
+    this.simulationShader.bind();
+    //upload uniforms
+    this.simulationShader.uMvp(this.planeCamera);
+    this.simulationShader.uTest([this.delta, this.delta + 0.4]);
+    this.simulationShader.uParticlePos(this.particlePositions[this.bufferSelector]);
+    //rebind attributes for weird gpu setups
+    this.geo.uvBuffer.attribPointer(this.simulationShader);
+    //draw the points array
+    this.gl.drawArrays(this.gl.POINTS, 0, particles);
+
+    requestAnimationFrame(this.draw);
   }
 
   _setupMatrices()
